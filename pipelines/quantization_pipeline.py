@@ -192,8 +192,6 @@ def evaluate_model(
     import subprocess
     import os
 
-    if not evaluate:
-        return
     model_args = "pretrained=" + model_path  + ",add_bos_token=true"
 
     # Execute the huggingface_hub-cli command
