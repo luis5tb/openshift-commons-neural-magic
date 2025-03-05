@@ -293,7 +293,7 @@ def quantization_pipeline(
                                          'AWS_S3_BUCKET':'s3_bucket'})
 
     evaluate_model_task = evaluate_model(
-        model_path=output_path,
+        model_path=OPTIMIZED_MODEL_PATH,
     )
     evaluate_model_task.set_caching_options(False)
     evaluate_model_task.after(
