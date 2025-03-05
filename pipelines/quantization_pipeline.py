@@ -202,7 +202,7 @@ def evaluate_model(
                              "--model_args", model_args,
                              "--trust_remote_code",
                              "--tasks", "gsm8k",
-                             "--num_fewshot", "5"
+                             "--num_fewshot", "5",
                              "--limit", "250",
                              "--batch_size", "auto"],
                             capture_output=True, text=True, env=env)
@@ -243,6 +243,7 @@ def quantization_pipeline(
         model_id=model_id,
         output_path=BASE_MODEL_PATH,
     )
+    download_model_task.set_caching_options(False)
     mount_pvc(
         task=download_model_task,
         pvc_name=quantization_pvc_task.output,
@@ -255,6 +256,7 @@ def quantization_pipeline(
         output_path=OPTIMIZED_MODEL_PATH,
         quantization_type=quantization_type,
     )
+    quantize_model_task.set_caching_options(False)
     quantize_model_task.after(
         download_model_task,
     )
@@ -274,6 +276,7 @@ def quantization_pipeline(
         model_path=OPTIMIZED_MODEL_PATH,
         s3_path=output_path,
     )
+    upload_model_task.set_caching_options(False)
     upload_model_task.after(
         quantize_model_task,
     )
@@ -292,6 +295,7 @@ def quantization_pipeline(
     evaluate_model_task = evaluate_model(
         model_path=output_path,
     )
+    evaluate_model_task.set_caching_options(False)
     evaluate_model_task.after(
         quantize_model_task,
     )

@@ -74,4 +74,4 @@ Before running the pipeline:
    - Access Key
    - Secret Key
    - Endpoint
-   - Bucket
+   - Bucket: need to ensure the bucket exists on S3 (minio) before triggering the pipeline
