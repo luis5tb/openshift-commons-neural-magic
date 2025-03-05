@@ -224,7 +224,7 @@ def evaluate_model(
 def quantization_pipeline(
     model_id: str="ibm-granite/granite-3.2-2b-instruct",
     output_path: str="granite-int8",
-    quantization_type: str="int8",  
+    quantization_type: str="int8",
 ):
     #Steps:
     # 1) Download model
@@ -232,12 +232,13 @@ def quantization_pipeline(
     # 3) Upload model
     # 4) Evaluate model
 
+    storage_class = "gp3-csi"
     # Pipeline stage
     quantization_pvc_task = CreatePVC(
         pvc_name_suffix="-quantization",
-        access_modes=["ReadWriteMany"],
+        access_modes=["ReadWriteOnce"],
         size="30Gi",
-        storage_class_name="standard",
+        storage_class_name=storage_class,
     )
 
     download_model_task = download_model(
