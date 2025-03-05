@@ -36,15 +36,15 @@ To compile the pipeline into a YAML file that can be imported into OpenShift AI:
 python quantization_pipeline.py
 ```
 
-This will generate a `quantization_pipeline.yaml` file.
+This will generate a `quantization_pipeline.yaml` file. Download it to your local machine.
 
 ## Using the Pipeline
 
 1. Log into your OpenShift AI instance
 2. Navigate to "Data Science Pipelines" → "Pipelines"
-3. Click "Create Pipeline"
+3. Click "Import Pipeline"
 4. Choose "Upload file" and select the generated `quantization_pipeline.yaml`
-5. Click "Create"
+5. Click "Import pipeline"
 
 ### Pipeline Parameters
 
@@ -68,13 +68,10 @@ Make sure your cluster has the appropriate storage class available.
 
 Before running the pipeline:
 
-1. Create a data connection in OpenShift AI pointing to your S3 storage
+1. Create a data connection in OpenShift AI pointing to your S3 storage, named "pipeline-s3-connection"
 2. The data connection has the next mandatory fields:
-   - Connection name
+   - Connection name: pipeline-s3-connection
    - Access Key
    - Secret Key
    - Endpoint
    - Bucket
-
-The default data connection name (e.g., models) creates a secret named "aws-connection-XXX" (aws-connection-models for the example).
-Note when you pass that information to the pipeline you need to add the extra "aws-connection-" prefix.

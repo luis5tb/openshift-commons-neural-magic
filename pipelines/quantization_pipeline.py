@@ -225,7 +225,6 @@ def quantization_pipeline(
     model_id: str="ibm-granite/granite-3.2-2b-instruct",
     output_path: str="granite-int8",
     quantization_type: str="int8",  
-    data_connection: str="aws-connection-models",
 ):
     #Steps:
     # 1) Download model
@@ -285,7 +284,7 @@ def quantization_pipeline(
         mount_path=MOUNT_POINT,
     )
     use_secret_as_env(upload_model_task,
-                      secret_name=data_connection,
+                      secret_name="pipeline-s3-connection",
                       secret_key_to_env={'AWS_ACCESS_KEY_ID': 's3_access_key',
                                          'AWS_SECRET_ACCESS_KEY': 's3_secret_access_key',
                                          'AWS_S3_ENDPOINT': 's3_host',
@@ -293,8 +292,6 @@ def quantization_pipeline(
 
     evaluate_model_task = evaluate_model(
         model_path=output_path,
-        model_id=model_id,
-        data_connection=data_connection,
     )
     evaluate_model_task.after(
         quantize_model_task,
